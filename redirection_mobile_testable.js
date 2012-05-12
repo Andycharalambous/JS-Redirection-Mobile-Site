@@ -85,6 +85,9 @@ SA.redirection_mobile = function(document, window, navigator, configuration) {
 		// parameter to pass in the URL to avoid the redirection
 		redirection_param = config.noredirection_param || "noredirection",
 		
+		//cookie name for referrer
+		referrer_cookie_name = "_referrer",
+		
 		// prefix appended to the hostname
 		mobile_prefix = config.mobile_prefix || "m",
 		
@@ -172,6 +175,12 @@ SA.redirection_mobile = function(document, window, navigator, configuration) {
 		
 		if (keep_query) {
 			path_query += document.location.search;
+		}
+		
+		// copy the referrer url to a cookie so it's not lost on redirection
+		if (document.referrer) {
+			document.cookie = referrer_cookie_name + "=" + document.referrer + ";expires="+
+				addTimeToDate(3600*1000*cookie_hours).toUTCString();
 		}
 		
 		if (isUATablet){

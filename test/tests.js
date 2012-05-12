@@ -75,8 +75,10 @@ module("Redirection happening");
 test ('iPhoneRedirection()', function() {
 	window.TEST.mockDocument.location.host = "domain.com";
 	window.TEST.config.noredirection_param = "";
+	window.TEST.mockDocument.referrer = "http://domain.com";
 	SA.redirection_mobile(window.TEST.mockDocument, window.TEST, window.TEST.mockIphoneNavigator,  window.TEST.config);
 	ok (window.TEST.mockDocument.location.href === "http://m.domain.com", "Redirection for iPhone not happening");
+	ok (window.TEST.mockDocument.cookie.indexOf("_referrer=http://domain.com")>-1, "Referrer not copied to cookie");
 })
 
 test ('AndroidRedirection()', function() {
